@@ -24,7 +24,9 @@ public class Aluno {
                     int id = Integer.parseInt(parte[0]);
                     String nome = parte[1];
                     alunos.put(id, nome);
-                    maxId = id;
+                    if(id > maxId) {
+                        maxId = id;
+                    }
                 }
             }
         } catch (IOException e) {
@@ -35,6 +37,7 @@ public class Aluno {
     //exibe as informações do arquivo csv
     public void exibirCsv() {
         try (BufferedReader br = new BufferedReader(new FileReader(alunoCsv))) {
+            System.out.println("id" + " " + "nome");
             String linha;
             while ((linha = br.readLine()) != null) {
                 String[] parte = linha.split(",");
@@ -43,8 +46,10 @@ public class Aluno {
                 if(!parte[0].equals("id")) {
                     int id = Integer.parseInt(parte[0]);
                     String nome = parte[1];
+                    System.out.println(id + " " + nome);
                 }
             }
+            System.out.println();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,12 +57,14 @@ public class Aluno {
 
     public void cadastrarAluno(String nome) throws IOException {
         int newId = 0;
-        FileWriter csvWriter = new FileWriter("./alunos.csv");
+        FileWriter fr = new FileWriter("./alunos.csv", true);
+        BufferedWriter br = new BufferedWriter(fr);
 
         //procura o primeiro valor disponível para criar um id
-        for(int i = 100; i < maxId; i++) {
+        for(int i = 1; i < maxId; i++) {
             boolean unico = true;
             for(int id : alunos.keySet() ) {
+                System.out.println(id);
                 if(id == i) {
                     unico = false;
                 }
@@ -69,11 +76,13 @@ public class Aluno {
         if(newId == 0) {
             newId = maxId + 1;
         }
-        csvWriter.append(String.valueOf(newId));
-        csvWriter.append(",");
-        csvWriter.append(nome);
-        csvWriter.append("\n");
+        br.newLine();
+        br.write(newId + "," + nome);
         alunos.put(newId, nome);
+        System.out.println(newId + " " + nome);
+        br.close();
+        //leitura para impedir que dados sejam sobrescritos ao serem alterados enquanto o código está em execução
+        lerCsv();
     }
 
 }

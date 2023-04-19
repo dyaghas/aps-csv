@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
+import static java.lang.System.exit;
 
 public class Main {
 
@@ -15,24 +16,34 @@ public class Main {
         //instancia o arquivo csv em um hashmap
         alunos.lerCsv();
 
-        System.out.println(
-                "Digite o número correspondente a ação que deseja realizar\n" +
-                "1 - Listar alunos\n" +
-                "2 - Cadastrar aluno\n"
-        );
+        while(1 == 1) {
 
-        Scanner scan = new Scanner(System.in);
-        int escolha = scan.nextInt();
+            System.out.println(
+                    "Digite o número correspondente a ação que deseja realizar\n" +
+                            "0 - finalizar programa\n" +
+                            "1 - Listar alunos\n" +
+                            "2 - Cadastrar aluno"
+            );
 
-        switch(escolha) {
-            case 1:
-                alunos.exibirCsv();
-                break;
-            case 2:
-                System.out.print("Digite o nome do aluno: ");
-                String nome = scan.nextLine();
-                alunos.cadastrarAluno(nome);
-                break;
+            Scanner scan = new Scanner(System.in);
+            int escolha = scan.nextInt();
+            scan.nextLine();
+
+            switch (escolha) {
+                case 0:
+                    exit(0);
+                    break;
+                case 1:
+                    alunos.exibirCsv();
+                    break;
+                case 2:
+                    System.out.print("Digite o nome do aluno: ");
+                    String nome = scan.nextLine();
+                    alunos.cadastrarAluno(nome);
+                    break;
+                default:
+                    System.out.println("entrada incorreta");
+            }
         }
     }
 }
