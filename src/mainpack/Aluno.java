@@ -45,7 +45,7 @@ public class Aluno {
                 }
             }
             System.out.println();
-        } catch (IOException e) {
+        } catch(IOException e) {
             e.printStackTrace();
         }
     }
