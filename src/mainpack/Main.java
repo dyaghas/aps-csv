@@ -14,12 +14,15 @@ public class Main {
         Aluno alunos = new Aluno();
         //instancia o arquivo csv em um hashmap
         alunos.lerCsv();
+        Curso cursos = new Curso();
         while(true) {
             System.out.println(
                     "Digite o número correspondente a ação que deseja realizar\n" +
                             "0 - finalizar programa\n" +
                             "1 - Listar alunos\n" +
-                            "2 - Cadastrar aluno"
+                            "2 - Cadastrar aluno\n" +
+                            "3 - Listar cursos\n" +
+                            "4 - Cadastrar curso\n"
             );
             try {
                 Scanner scan = new Scanner(System.in);
@@ -42,6 +45,9 @@ public class Main {
                 }
             } catch(InputMismatchException e) {
                 System.out.println("\nErro: digite um número válido\n");
+                Scanner scan = new Scanner(System.in);
+                int escolha = scan.nextInt();
+                scan.nextLine();
             }
         }
     }
