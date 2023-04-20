@@ -16,13 +16,17 @@ public class Main {
         //instancia o arquivo csv em um hashmap
         alunos.lerCsv();
 
-        while(1 == 1) {
+        Curso cursos = new Curso();
+
+        while(true) {
 
             System.out.println(
                     "Digite o número correspondente a ação que deseja realizar\n" +
                             "0 - finalizar programa\n" +
                             "1 - Listar alunos\n" +
-                            "2 - Cadastrar aluno"
+                            "2 - Cadastrar aluno\n" +
+                            "3 - Listar cursos\n" +
+                            "4 - Cadastrar curso\n"
             );
 
             Scanner scan = new Scanner(System.in);
@@ -40,6 +44,19 @@ public class Main {
                     System.out.print("Digite o nome do aluno: ");
                     String nome = scan.nextLine();
                     alunos.cadastrarAluno(nome);
+                    break;
+                case 3:
+                    cursos.exibirCsv();
+                    break;
+                case 4:
+                    System.out.print("Digite o nome do curso: ");
+                    String nomeCurso = scan.nextLine();
+                    System.out.print("Digite o nível do curso: ");
+                    String nivelCurso = scan.nextLine();
+                    System.out.print("Digite o ano do curso: ");
+                    int anoCurso = scan.nextInt();
+                    scan.nextLine();
+                    cursos.cadastrarCurso(nomeCurso, nivelCurso, anoCurso);
                     break;
                 default:
                     System.out.println("entrada incorreta");
