@@ -8,10 +8,9 @@ import static java.lang.System.exit;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+        Scanner scan = new Scanner(System.in);
         Aluno alunos = new Aluno();
         Curso cursos = new Curso();
-        //instancia o arquivo csv em um hashmap
-        alunos.lerCsv();
         while(true) {
             System.out.println(
                     "Digite o número correspondente a ação que deseja realizar\n" +
@@ -22,18 +21,17 @@ public class Main {
                             "4 - Cadastrar curso\n"
             );
             try {
-                Scanner scan = new Scanner(System.in);
                 int escolha = scan.nextInt();
                 scan.nextLine();
                 switch (escolha) {
                     case 0:
-                        exit(0);
+                        System.exit(0);
                         break;
                     case 1:
                         alunos.listarAlunos();
                         break;
                     case 2:
-                        alunos.cadastrarAluno();
+                        alunos.cadastrarAluno(scan);
                         break;
                     case 3:
                         cursos.exibirCsv();

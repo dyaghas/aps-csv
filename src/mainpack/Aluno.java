@@ -1,17 +1,22 @@
 package mainpack;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.Set;
 
 public class Aluno {
     private int maxId;
-    File alunoCsv = new File("./alunos.csv");
-    Scanner scan = new Scanner(System.in);
+    private int novoId;
+    private final File alunoCsv = new File("./alunos.csv");
 
     //hashmap que guarda as linhas do arquivo aluno.csv
     HashMap<Integer, String> alunos = new HashMap<>();
+
+    public Aluno() {
+        lerCsv();
+    }
 
     //instancia o arquivo csv no hashmap
     public void lerCsv() {
@@ -43,10 +48,10 @@ public class Aluno {
         System.out.println(str);
     }
 
-    public void cadastrarAluno() throws IOException {
+    public void cadastrarAluno(@NotNull Scanner scan) throws IOException {
         System.out.print("Digite o nome do aluno: ");
         String nome = scan.nextLine();
-        if(verificaNome(nome)) {
+        if(verificarNome(nome)) {
             FileWriter fr = new FileWriter(alunoCsv, true);
             BufferedWriter br = new BufferedWriter(fr);
             int newId = getNewId();
@@ -55,8 +60,6 @@ public class Aluno {
             alunos.put(newId, nome);
             System.out.println(newId + " " + nome);
             br.close();
-            //leitura para impedir que dados sejam sobrescritos ao serem alterados enquanto o código está em execução
-            lerCsv();
         } else {
             System.out.println("Nome deve conter entre 3 e 50 caracteres");
         }
@@ -64,13 +67,10 @@ public class Aluno {
 
     //procura o primeiro valor disponível para criar um id
     public int getNewId() {
-        Set<Integer> idsExistentes = alunos.keySet();
-        int newId = 1;
-        while(idsExistentes.contains(newId)) {
-            newId++;
+        while(alunos.containsKey(novoId)) {
+            novoId++;
         }
-        updateMaxId(newId);
-        return newId;
+        return novoId++;
     }
 
     public void updateMaxId(int id) {
@@ -79,11 +79,7 @@ public class Aluno {
         }
     }
 
-    public boolean verificaNome(String nome) {
-        if(nome.length() >= 3 && nome.length() <= 50) {
-            return true;
-        } else {
-            return false;
-        }
+    public boolean verificarNome(String nome) {
+        return nome.length() >= 3 && nome.length() <= 50;
     }
 }
