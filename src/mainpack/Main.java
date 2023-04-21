@@ -1,6 +1,5 @@
 package mainpack;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -9,11 +8,8 @@ import static java.lang.System.exit;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        //acessa o arquivo csv com os dados dos alunos
-        File alunoCsv = new File("./alunos.csv");
+        Scanner scan = new Scanner(System.in);
         Aluno alunos = new Aluno();
-        //instancia o arquivo csv em um hashmap
-        alunos.lerCsv();
         Curso cursos = new Curso();
         while(true) {
             System.out.println(
@@ -25,20 +21,17 @@ public class Main {
                             "4 - Cadastrar curso\n"
             );
             try {
-                Scanner scan = new Scanner(System.in);
                 int escolha = scan.nextInt();
                 scan.nextLine();
                 switch (escolha) {
                     case 0:
-                        exit(0);
+                        System.exit(0);
                         break;
                     case 1:
-                        alunos.exibirCsv();
+                        alunos.listarAlunos();
                         break;
                     case 2:
-                        System.out.print("Digite o nome do aluno: ");
-                        String nome = scan.nextLine();
-                        alunos.cadastrarAluno(nome);
+                        alunos.cadastrarAluno(scan);
                         break;
                     case 3:
                         cursos.exibirCsv();
@@ -58,9 +51,6 @@ public class Main {
                 }
             } catch(InputMismatchException e) {
                 System.out.println("\nErro: digite um número válido\n");
-                Scanner scan = new Scanner(System.in);
-                int escolha = scan.nextInt();
-                scan.nextLine();
             }
         }
     }
