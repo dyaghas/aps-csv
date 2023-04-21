@@ -28,6 +28,7 @@ public class Main {
                             "3 - Listar cursos\n" +
                             "4 - Cadastrar curso\n"
             );
+<<<<<<< Updated upstream
 
             Scanner scan = new Scanner(System.in);
             int escolha = scan.nextInt();
@@ -60,6 +61,32 @@ public class Main {
                     break;
                 default:
                     System.out.println("entrada incorreta");
+=======
+            try {
+                int escolha = scan.nextInt();
+                scan.nextLine();
+                switch (escolha) {
+                    case 0:
+                        System.exit(0);
+                        break;
+                    case 1:
+                        alunos.listarAlunos();
+                        break;
+                    case 2:
+                        alunos.cadastrarAluno(scan);
+                        break;
+                    case 3:
+                        cursos.exibirCsv();
+                        break;
+                    case 4:
+                        cursos.cadastrarCurso(scan);
+                        break;
+                    default:
+                        System.out.println("\nentrada incorreta\n");
+                }
+            } catch(InputMismatchException e) {
+                System.out.println("\nErro: digite um número válido\n");
+>>>>>>> Stashed changes
             }
         }
     }
