@@ -30,14 +30,22 @@ public class Curso {
         return ano;
     }
 
-    // Escreve no arquivo CSV
-    public void cadastrarCurso(String nome, String nivel, int ano) throws IOException {
+    // Escreve no arquivo CSV e deixa as informações em lowercase !--AINDA NÃO ACEITA ACENTUAÇÃO--!
+    public void cadastrarCurso(Scanner scan) throws IOException {
+        System.out.print("Digite o nome do curso: ");
+        String nomeCurso = scan.nextLine().toLowerCase();
+        System.out.print("Digite o nível do curso: ");
+        String nivelCurso = scan.nextLine().toLowerCase();
+        System.out.print("Digite o ano do curso: ");
+        int anoCurso = scan.nextInt();
+        scan.nextLine();
+    
         FileWriter writer = new FileWriter("./cursos.csv", true);
-        writer.append(nome);
+        writer.append(nomeCurso);
         writer.append(",");
-        writer.append(nivel);
+        writer.append(nivelCurso);
         writer.append(",");
-        writer.append(String.valueOf(ano));
+        writer.append(String.valueOf(anoCurso));
         writer.append("\n");
         writer.close();
     }
