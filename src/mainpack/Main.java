@@ -36,14 +36,7 @@ public class Main {
                         cursos.exibirCsv();
                         break;
                     case 4:
-                        System.out.print("Digite o nome do curso: ");
-                        String nomeCurso = scan.nextLine();
-                        System.out.print("Digite o nível do curso: ");
-                        String nivelCurso = scan.nextLine();
-                        System.out.print("Digite o ano do curso: ");
-                        int anoCurso = scan.nextInt();
-                        scan.nextLine();
-                        cursos.cadastrarCurso(nomeCurso, nivelCurso, anoCurso);
+                        cursos.cadastrarCurso(scan);
                         break;
                     default:
                         System.out.println("\nentrada incorreta\n");
