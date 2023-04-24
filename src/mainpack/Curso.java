@@ -30,7 +30,7 @@ public class Curso {
         return ano;
     }
 
-    // Escreve no arquivo CSV e deixa as informações em lowercase !--AINDA NÃO ACEITA ACENTUAÇÃO--!
+    // Cadastra o curso no arquivo CSV, mas se já existir, não cadastra. (Acentuação e cedilha ficam assim -> �)
     public void cadastrarCurso(Scanner scan) throws IOException {
         System.out.print("Digite o nome do curso: ");
         String nomeCurso = scan.nextLine().toLowerCase();
@@ -39,15 +39,32 @@ public class Curso {
         System.out.print("Digite o ano do curso: ");
         int anoCurso = scan.nextInt();
         scan.nextLine();
-    
-        FileWriter writer = new FileWriter("./cursos.csv", true);
-        writer.append(nomeCurso);
-        writer.append(",");
-        writer.append(nivelCurso);
-        writer.append(",");
-        writer.append(String.valueOf(anoCurso));
-        writer.append("\n");
-        writer.close();
+
+        File cursoCsv = new File("./cursos.csv");
+        Scanner scanner = new Scanner(cursoCsv);
+        boolean existe = false;
+        while (scanner.hasNextLine()) {
+            String linha = scanner.nextLine();
+            String[] dados = linha.split(",");
+            if (dados[0].equals(nomeCurso) && dados[1].equals(nivelCurso) && dados[2].equals(String.valueOf(anoCurso))) {
+                existe = true;
+                break;
+            }
+        }
+        scanner.close();
+
+        if (!existe) {
+            FileWriter writer = new FileWriter("./cursos.csv", true);
+            writer.append(nomeCurso);
+            writer.append(",");
+            writer.append(nivelCurso);
+            writer.append(",");
+            writer.append(String.valueOf(anoCurso));
+            writer.append("\n");
+            writer.close();
+        } else {
+            System.out.println("Curso já cadastrado!");
+        }
     }
 
     // Exibe os cursos cadastrados
