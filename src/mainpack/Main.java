@@ -18,7 +18,9 @@ public class Main {
                             "1 - Listar alunos\n" +
                             "2 - Cadastrar aluno\n" +
                             "3 - Listar cursos\n" +
-                            "4 - Cadastrar curso\n"
+                            "4 - Cadastrar curso\n" +
+                            "5 - Deletar curso\n"
+
             );
             try {
                 int escolha = scan.nextInt();
@@ -39,8 +41,14 @@ public class Main {
                     case 4:
                         cursos.cadastrarCurso(scan);
                         break;
+                    case 5:
+                        cursos.deletarCurso(scan);
+                        break;
+                    case 6:
+                        System.out.println("Não implementado ainda");
+                        break;
                     default:
-                        System.out.println("\nentrada incorreta\n");
+                        System.out.println("\nEntrada incorreta\n");
                 }
             } catch(InputMismatchException e) {
                 System.out.println("\nErro: digite um número válido\n");
