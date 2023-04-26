@@ -48,6 +48,7 @@ public class Aluno {
     private String gerarStringAlunos() {
         StringBuilder str = new StringBuilder();
         System.out.println("id nome");
+        //Transforma o Hashmap em um hashSet para possibilitar a iteração
         for(HashMap.Entry<Integer, String> set : alunos.entrySet()) {
             //guarda os valores de cada instância no StringBuilder
             str.append(set.getKey()).append(" ").append(set.getValue()).append("\n");
@@ -58,14 +59,18 @@ public class Aluno {
         System.out.print("Digite o nome do aluno: ");
         String nome = scan.nextLine();
         if(verificarNome(nome)) {
-            FileWriter fr = new FileWriter(alunoCsv, true);
-            BufferedWriter br = new BufferedWriter(fr);
-            int newId = getNewId();
-            br.newLine();
-            br.write(newId + "," + nome);
-            alunos.put(newId, nome);
-            System.out.println(newId + " " + nome);
-            br.close();
+            try {
+                FileWriter fr = new FileWriter(alunoCsv, true);
+                BufferedWriter br = new BufferedWriter(fr);
+                int newId = getNewId();
+                br.newLine();
+                br.write(newId + "," + nome);
+                alunos.put(newId, nome);
+                System.out.println(newId + " " + nome);
+                br.close();
+            } catch(IOException e) {
+                System.out.println("Erro ao cadastrar aluno: " + e.getMessage());
+            }
         } else {
             System.out.println("Nome deve conter entre 3 e 50 caracteres");
         }
