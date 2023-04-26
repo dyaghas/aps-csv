@@ -55,7 +55,7 @@ public class Aluno {
         }
         return str.toString();
     }
-    public void cadastrarAluno(@NotNull Scanner scan) throws IOException {
+    public void cadastrarAluno(@NotNull Scanner scan) {
         System.out.print("Digite o nome do aluno: ");
         String nome = scan.nextLine();
         if(verificarNome(nome)) {
