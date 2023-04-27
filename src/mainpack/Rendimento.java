@@ -1,57 +1,57 @@
 package mainpack;
 
 public abstract class Rendimento {
-    private double NP1;
-    private double NP2;
+    private double np1;
+    private double np2;
     private double reposicao;
     private double exame;
     private double media;
-    private boolean aprovado;
+    private boolean aprovado = false;
 
     // Construtor do rendimento
     public Rendimento() {
 
     }
 
-    public Rendimento(double NP1, double NP2, double reposicao, double exame, double media, boolean aprovado) {
-        this.NP1 = NP1;
-        this.NP2 = NP2;
+    public Rendimento(double np1, double np2, double reposicao, double exame, double media, boolean aprovado) {
+        this.np1 = np1;
+        this.np2 = np2;
         this.reposicao = reposicao;
         this.exame = exame;
         this.media = media;
         this.aprovado = aprovado;
     }
 
-    public double calcularMedia(double np1, double np2, double nRepo) {
-        double res = 0;
+    public void calcularMedia(double np1, double np2, double nRepo) {
         if(np1 < nRepo && np1 < np2) {
             //caso np1 seja a menor nota
-            res = (np2 + nRepo) / 2;
+            media = (np2 + nRepo) / 2;
         } else if(np2 < nRepo && np2 < np1) {
             //caso np2 seja a menor nota
-            res = (np1 + nRepo) / 2;
+            media = (np1 + nRepo) / 2;
         } else {
             //caso nRepo seja a menor nota
-            res = (np1 + np2) / 2;
+            media = (np1 + np2) / 2;
         }
-        return res;
     }
+
+    public abstract void validarMedia(double media);
 
     // Getters e setters
     public double getNP1() {
-        return NP1;
+        return np1;
     }
 
-    public void setNP1(double NP1) {
-        this.NP1 = NP1;
+    public void setNP1(double np2) {
+        this.np1 = np2;
     }
 
     public double getNP2() {
-        return NP2;
+        return np2;
     }
 
-    public void setNP2(double NP2) {
-        this.NP2 = NP2;
+    public void setNP2(double np2) {
+        this.np2 = np2;
     }
 
     public double getReposicao() {
@@ -84,10 +84,5 @@ public abstract class Rendimento {
 
     public void setAprovado(boolean aprovado) {
         this.aprovado = aprovado;
-    }
-
-    // Calcula a média do aluno
-    public double calcularMedia() {
-        return (NP1 + NP2) / 2;
     }
 }
