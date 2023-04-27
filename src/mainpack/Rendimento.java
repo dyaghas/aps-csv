@@ -9,6 +9,10 @@ public abstract class Rendimento {
     private boolean aprovado;
 
     // Construtor do rendimento
+    public Rendimento() {
+
+    }
+
     public Rendimento(double NP1, double NP2, double reposicao, double exame, double media, boolean aprovado) {
         this.NP1 = NP1;
         this.NP2 = NP2;
@@ -16,6 +20,21 @@ public abstract class Rendimento {
         this.exame = exame;
         this.media = media;
         this.aprovado = aprovado;
+    }
+
+    public double calcularMedia(double np1, double np2, double nRepo) {
+        double res = 0;
+        if(np1 < nRepo && np1 < np2) {
+            //caso np1 seja a menor nota
+            res = (np2 + nRepo) / 2;
+        } else if(np2 < nRepo && np2 < np1) {
+            //caso np2 seja a menor nota
+            res = (np1 + nRepo) / 2;
+        } else {
+            //caso nRepo seja a menor nota
+            res = (np1 + np2) / 2;
+        }
+        return res;
     }
 
     // Getters e setters

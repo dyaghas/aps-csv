@@ -7,6 +7,7 @@ public class Curso {
     private String nome;
     private String nivel;
     private int ano;
+    private File cursoCsv = new File("./cursos.csv");
 
     // Construtor vazio pra não bugar no Main
     public Curso() {}
@@ -16,18 +17,6 @@ public class Curso {
         this.nome = nome;
         this.nivel = nivel;
         this.ano = ano;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getNivel() {
-        return nivel;
-    }
-
-    public int getAno() {
-        return ano;
     }
 
     // Escreve no arquivo CSV e deixa as informações em lowercase !--AINDA NÃO ACEITA ACENTUAÇÃO--!
@@ -52,7 +41,6 @@ public class Curso {
 
     // Exibe os cursos cadastrados
     public void exibirCsv() throws IOException {
-        File cursoCsv = new File("./cursos.csv");
         Scanner scanner = new Scanner(cursoCsv);
         while (scanner.hasNextLine()) {
             String linha = scanner.nextLine();
@@ -63,5 +51,22 @@ public class Curso {
             System.out.println();
         }
         scanner.close();
+    }
+
+    //getters e setters
+    public String getNome() {
+        return nome;
+    }
+
+    public String getNivel() {
+        return nivel;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public File getCursoCsv() {
+        return this.cursoCsv;
     }
 }

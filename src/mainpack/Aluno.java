@@ -65,14 +65,6 @@ public class Aluno {
         }
     }
 
-    //procura o primeiro valor disponível para criar um id
-    public int getNewId() {
-        while(alunos.containsKey(novoId)) {
-            novoId++;
-        }
-        return novoId++;
-    }
-
     public void updateMaxId(int id) {
         if(id > maxId) {
             maxId = id;
@@ -81,5 +73,19 @@ public class Aluno {
 
     public boolean verificarNome(String nome) {
         return nome.length() >= 3 && nome.length() <= 50;
+    }
+
+    //getters e setters
+
+    public File getAlunoCsv() {
+        return this.alunoCsv;
+    }
+
+    //procura o primeiro valor disponível para criar um id
+    public int getNewId() {
+        while(alunos.containsKey(novoId)) {
+            novoId++;
+        }
+        return novoId++;
     }
 }
