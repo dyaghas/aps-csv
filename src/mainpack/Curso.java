@@ -6,10 +6,12 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class Curso {
+    private String nome;
+    private String nivel;
+    private int ano;
+    private File cursoCsv = new File("./cursos.csv");
 
-    // Construtor vazio pra não bugar no Main
     public Curso() {}
-
 
     // Cadastra o curso em "cursos.csv"
     public void cadastrarCurso(Scanner scan) throws IOException {
@@ -118,7 +120,6 @@ public class Curso {
             System.out.println("Curso não encontrado.");
         }
     }
-
     // Exibe os cursos cadastrados
     public void exibirCurso() throws IOException {
         File cursoCsv = new File("./cursos.csv");
@@ -153,5 +154,22 @@ public class Curso {
             }
         }
         scanner.close();
+    }
+
+    //getters e setters
+    public String getNome() {
+        return nome;
+    }
+
+    public String getNivel() {
+        return nivel;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public File getCursoCsv() {
+        return this.cursoCsv;
     }
 }

@@ -40,6 +40,7 @@ public class Aluno {
             alunos.put(id, nome);
         }
     }
+
     //exibe os alunos armazenados no hashmap
     public void listarAlunos() {
         String alunosStr = gerarStringAlunos();
@@ -55,6 +56,7 @@ public class Aluno {
         }
         return str.toString();
     }
+
     public void cadastrarAluno(@NotNull Scanner scan) {
         System.out.print("Digite o nome do aluno: ");
         String nome = scan.nextLine();
@@ -75,20 +77,28 @@ public class Aluno {
             System.out.println("Nome deve conter entre 3 e 50 caracteres");
         }
     }
+
+    public void updateMaxId(int id) {
+        if(id > maxId) {
+            maxId = id;
+        }
+    }
+
+    public boolean verificarNome(String nome) {
+        return nome.length() >= 3 && nome.length() <= 50;
+    }
+
+    //getters e setters
+
+    public HashMap getAlunosHashMap() {
+        return this.alunos;
+    }
+
     //procura o primeiro valor disponível para criar um id
     public int getNewId() {
         while(alunos.containsKey(novoId)) {
             novoId++;
         }
         return novoId++;
-    }
-    public void updateMaxId(int id) {
-        if(id > maxId) {
-            maxId = id;
-        }
-    }
-    //verifica o comprimento do nome inserido pelo usuário
-    public boolean verificarNome(String nome) {
-        return nome.length() >= 3 && nome.length() <= 50;
     }
 }
