@@ -1,8 +1,15 @@
 package mainpack;
 
-public class RendimentoGrad extends Rendimento {
+import java.util.HashMap;
 
-    //o valor de media deve ser instanciado através de um getter da superclasse em Main
+public class RendimentoGrad extends Rendimento {
+    private HashMap alunosLista;
+
+    public RendimentoGrad(Aluno alunoObject) {
+        alunosLista = alunoObject.getAlunosHashMap();
+    }
+
+    @Override
     public void validarMedia(double media) {
         if(media >= 7) {
             setAprovado(true);

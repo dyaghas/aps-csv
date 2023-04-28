@@ -15,11 +15,11 @@ public class Aluno {
     HashMap<Integer, String> alunos = new HashMap<>();
 
     public Aluno() {
-        lerCsv();
+        lerCsv(alunos);
     }
 
     //instancia o arquivo csv no hashmap
-    public void lerCsv() {
+    public void lerCsv(HashMap alunos) {
         try (BufferedReader br = new BufferedReader(new FileReader(alunoCsv))) {
             String linha;
             while ((linha = br.readLine()) != null) {
@@ -77,8 +77,8 @@ public class Aluno {
 
     //getters e setters
 
-    public File getAlunoCsv() {
-        return this.alunoCsv;
+    public HashMap getAlunosHashMap() {
+        return this.alunos;
     }
 
     //procura o primeiro valor disponível para criar um id
