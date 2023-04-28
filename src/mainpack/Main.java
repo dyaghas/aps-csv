@@ -10,8 +10,8 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         Aluno alunos = new Aluno();
         Curso cursos = new Curso();
-        RendimentoGrad rendimento = new RendimentoGrad(alunos);
-        RendimentoPosGrad rendimentoPosGrad = new RendimentoPosGrad(alunos);
+        RendimentoGrad rendimento = new RendimentoGrad();
+        RendimentoPosGrad rendimentoPosGrad = new RendimentoPosGrad();
 
         while(true) {
             System.out.println(

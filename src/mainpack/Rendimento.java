@@ -11,7 +11,7 @@ public abstract class Rendimento {
     private double reposicao;
     private double exame;
     private double media;
-    private boolean aprovado = false;
+    private boolean aprovado;
 
     // Construtor do rendimento
     public Rendimento() {

@@ -3,10 +3,8 @@ package mainpack;
 import java.util.HashMap;
 
 public class RendimentoGrad extends Rendimento {
-    private HashMap alunosLista;
 
-    public RendimentoGrad(Aluno alunoObject) {
-        alunosLista = alunoObject.getAlunosHashMap();
+    public RendimentoGrad() {
     }
 
     @Override
@@ -17,6 +15,9 @@ public class RendimentoGrad extends Rendimento {
             media = (media + getExame()) / 2;
             if(media >= 5) {
                 setAprovado(true);
+            }
+            else {
+                setAprovado(false);
             }
         }
     }
