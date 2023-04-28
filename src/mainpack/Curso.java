@@ -11,10 +11,35 @@ public class Curso {
     private int ano;
     private File cursoCsv = new File("./cursos.csv");
 
-    public Curso() {}
+    //hashmap que guarda as linhas do arquivo cursos.csv
+    ArrayList<String> cursos = new ArrayList<>();
+
+    public Curso() {
+        lerCsv();
+        System.out.println(cursos);
+    }
+
+    public void lerCsv() {
+        try (BufferedReader br = new BufferedReader(new FileReader(cursoCsv))) {
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                processaLinhaCsv(linha);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void processaLinhaCsv(String linha) {
+        String[] parte = linha.split(",");
+        String nome = parte[0];
+        String nivel = parte[1];
+        int ano = Integer.parseInt(parte[2]);
+        cursos.add(nome+"/"+nivel+"/"+ano);
+    }
 
     // Cadastra o curso em "cursos.csv"
-    public void cadastrarCurso(Scanner scan) throws IOException {
+    public void cadastrarDadoCsv(Scanner scan) throws IOException {
         System.out.print("Digite o nome do curso: ");
         String nomeCurso = scan.nextLine().toUpperCase();
 
@@ -121,7 +146,7 @@ public class Curso {
         }
     }
     // Exibe os cursos cadastrados
-    public void exibirCurso() throws IOException {
+    public void listarCsv() throws IOException {
         File cursoCsv = new File("./cursos.csv");
         Scanner scanner = new Scanner(cursoCsv);
         while (scanner.hasNextLine()) {

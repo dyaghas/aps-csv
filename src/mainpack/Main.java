@@ -33,19 +33,19 @@ public class Main {
                         System.exit(0);
                         break;
                     case 1:
-                        alunos.listarAlunos();
+                        alunos.listarCsv();
                         break;
                     case 2:
-                        alunos.cadastrarAluno(scan);
+                        alunos.cadastrarDadoCsv(scan);
                         break;
                     case 3:
-                        cursos.exibirCurso();
+                        cursos.listarCsv();
                         break;
                     case 4:
                         cursos.exibirCursoAno(scan);
                         break;
                     case 5:
-                        cursos.cadastrarCurso(scan);
+                        cursos.cadastrarDadoCsv(scan);
                         break;
                     case 6:
                         cursos.deletarCurso(scan);

@@ -42,7 +42,7 @@ public class Aluno {
     }
 
     //exibe os alunos armazenados no hashmap
-    public void listarAlunos() {
+    public void listarCsv() {
         String alunosStr = gerarStringAlunos();
         System.out.println(alunosStr);
     }
@@ -57,7 +57,7 @@ public class Aluno {
         return str.toString();
     }
 
-    public void cadastrarAluno(@NotNull Scanner scan) {
+    public void cadastrarDadoCsv(@NotNull Scanner scan) {
         System.out.print("Digite o nome do aluno: ");
         String nome = scan.nextLine();
         if(verificarNome(nome)) {
