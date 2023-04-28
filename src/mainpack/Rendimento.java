@@ -51,8 +51,10 @@ public abstract class Rendimento {
         scan.nextLine();
         //faz referência ao HashMap 'alunos' da classe 'Aluno'
         HashMap alunos = aluno.getAlunosHashMap();
+        //verifica se o HashMap possui a chave com o valor de 'idAluno'
         if(alunos.containsKey(idAluno)) {
             System.out.println(alunos.get(idAluno));
+            String nomeAluno = (String) alunos.get(idAluno);
         }
     }
 
