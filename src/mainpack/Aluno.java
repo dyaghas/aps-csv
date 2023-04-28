@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Aluno {
+public class Aluno implements CsvInterface {
     private int maxId;
     private int novoId;
     private final File alunoCsv = new File("./alunos.csv");
