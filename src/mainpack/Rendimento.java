@@ -1,6 +1,7 @@
 package mainpack;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
@@ -32,6 +33,8 @@ public abstract class Rendimento {
         validarMedia(media);
     }
 
+    public abstract void validarMedia(double media);
+
     public void cadastrarRendimento(Scanner scan, Aluno aluno, Curso curso, String nivelCurso) {
         int idAluno = lerIdAluno(scan);
         scan.nextLine();
@@ -47,10 +50,14 @@ public abstract class Rendimento {
         int anoCurso = lerAnoCurso(scan);
         String nomeArquivo = formatarCurso(nomeCurso, nivelCurso, anoCurso);
         try {
-            FileWriter fr = new FileWriter(nomeArquivo, true);
-            BufferedWriter br = new BufferedWriter(fr);
-            br.write(idAluno+","+np1+","+np2+","+reposicao+","+exame);
-            br.close();
+            if(new File(nomeArquivo).isFile()) {
+                FileWriter fr = new FileWriter(nomeArquivo, true);
+                BufferedWriter br = new BufferedWriter(fr);
+                br.write(idAluno + "," + np1 + "," + np2 + "," + reposicao + "," + exame);
+                br.close();
+            } else {
+                System.out.println("Curso não encontrado");
+            }
         } catch(IOException e) {
             System.out.println("Erro ao cadastrar o rendimento: " + e.getMessage());
         }
@@ -85,14 +92,22 @@ public abstract class Rendimento {
             cursoNivel = "POS-GRADUACAO";
         }
         String nomeArquivo = "./"+nomeCurso+"_"+cursoNivel+"_"+anoCurso;
-        nomeArquivo = nomeArquivo.replaceAll(" ", "-");
-        //transforma em uppercase e adiciona a extensão .csv
-        nomeArquivo = nomeArquivo.toUpperCase() + ".csv";
-        System.out.println(nomeArquivo);
+        nomeArquivo = formatarRegexArquivo(nomeArquivo);
         return nomeArquivo;
     }
 
-    public abstract void validarMedia(double media);
+    private String formatarRegexArquivo(String nomeArquivo) {
+        //substitui espaços por -
+        nomeArquivo = nomeArquivo.replaceAll(" ", "-");
+        //transforma ç em c ((?i) significa 'case insensitive')
+        nomeArquivo = nomeArquivo.replaceAll("(?i)ç", "c");
+        nomeArquivo = nomeArquivo.replaceAll("(?i)ã", "a");
+        nomeArquivo = nomeArquivo.replaceAll("(?i)í", "i");
+        nomeArquivo = nomeArquivo.replaceAll("(?i)ê", "e");
+        //transforma em uppercase e adiciona a extensão .csv
+        nomeArquivo = nomeArquivo.toUpperCase() + ".csv";
+        return nomeArquivo;
+    }
 
     // Getters e setters
     public void getAluno(Aluno aluno, int idAluno) {
