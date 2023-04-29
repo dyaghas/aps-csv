@@ -1,9 +1,6 @@
 package mainpack;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
@@ -38,7 +35,7 @@ public abstract class Rendimento {
             //caso np2 seja a menor nota
             media = (np1 + reposicao) / 2;
         } else {
-            //caso nRepo seja a menor nota
+            //caso reposicao seja a menor nota
             media = (np1 + np2) / 2;
         }
         validarMedia(media);
@@ -48,6 +45,13 @@ public abstract class Rendimento {
         int idAluno = lerIdAluno(scan);
         scan.nextLine();
         String nomeAluno = getNomeAluno(aluno, idAluno);
+        System.out.println("Digite a nota da NP1: ");
+        np1 = lerNotaAluno(scan);
+        System.out.println("Digite a nota da NP2: ");
+        np2 = lerNotaAluno(scan);
+        System.out.println("Digite a nota da reposição: ");
+        reposicao = lerNotaAluno(scan);
+        calcularMedia(np1, np2, reposicao);
         String nomeCurso = lerNomeCurso(scan);
         int anoCurso = lerAnoCurso(scan);
         String nomeArquivo = formatarCurso(nomeCurso, nivelCurso, anoCurso);
@@ -66,8 +70,14 @@ public abstract class Rendimento {
         return scan.nextInt();
     }
 
+    private int lerNotaAluno(Scanner scan) {
+        int nota = scan.nextInt();
+        scan.nextLine();
+        return nota;
+    }
+
     private String lerNomeCurso(Scanner scan) {
-        System.out.print("Digite o nome do curso:");
+        System.out.print("Digite o nome do curso: ");
         return scan.nextLine();
     }
 
@@ -153,5 +163,10 @@ public abstract class Rendimento {
 
     public void setAprovado(boolean aprovado) {
         this.aprovado = aprovado;
+        if(aprovado) {
+            System.out.println("O aluno está aprovado");
+        } else {
+            System.out.println("O aluno não está aprovado");
+        }
     }
 }

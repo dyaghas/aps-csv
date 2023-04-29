@@ -16,14 +16,14 @@ public class Main {
         while(true) {
             System.out.println(
                     "Digite o número correspondente a ação que deseja realizar\n" +
-                            "0 - Finalizar programa\n" +
-                            "1 - Listar alunos\n" +
-                            "2 - Cadastrar aluno\n" +
-                            "3 - Listar cursos\n" +
-                            "4 - Listar cursos por ano\n" +
-                            "5 - Cadastrar curso\n" +
-                            "6 - Deletar curso\n" +
-                            "7 - Cadastrar rendimento\n"
+                    "0 - Finalizar programa\n" +
+                    "1 - Listar alunos\n" +
+                    "2 - Cadastrar aluno\n" +
+                    "3 - Listar cursos\n" +
+                    "4 - Listar cursos por ano\n" +
+                    "5 - Cadastrar curso\n" +
+                    "6 - Deletar curso\n" +
+                    "7 - Cadastrar rendimento\n"
             );
             try {
                 int escolha = scan.nextInt();
