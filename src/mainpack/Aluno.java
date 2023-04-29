@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Aluno {
+public class Aluno implements CsvInterface {
     private int maxId;
     private int novoId;
     private final File alunoCsv = new File("./alunos.csv");
@@ -42,7 +42,7 @@ public class Aluno {
     }
 
     //exibe os alunos armazenados no hashmap
-    public void listarAlunos() {
+    public void listarCsv() {
         String alunosStr = gerarStringAlunos();
         System.out.println(alunosStr);
     }
@@ -57,7 +57,8 @@ public class Aluno {
         return str.toString();
     }
 
-    public void cadastrarAluno(@NotNull Scanner scan) {
+    // Cadastra o aluno em "alunos.csv"
+    public void cadastrarDadoCsv(@NotNull Scanner scan) {
         System.out.print("Digite o nome do aluno: ");
         String nome = scan.nextLine();
         if(verificarNome(nome)) {
@@ -78,6 +79,7 @@ public class Aluno {
         }
     }
 
+    //método responsável por escolher qual será o id do próximo aluno cadastrado
     public void updateMaxId(int id) {
         if(id > maxId) {
             maxId = id;
