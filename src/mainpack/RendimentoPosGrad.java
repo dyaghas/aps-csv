@@ -12,7 +12,7 @@ public class RendimentoPosGrad extends Rendimento {
         if(media >= 5) {
             setAprovado(true);
         } else {
-            media = (media + getExame()) / 2;
+            media = (media + lerExame()) / 2;
             if(media >= 5) {
                 setAprovado(true);
             }

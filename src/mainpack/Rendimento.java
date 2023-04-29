@@ -18,15 +18,6 @@ public abstract class Rendimento {
     public Rendimento() {
     }
 
-    public Rendimento(double np1, double np2, double reposicao, double exame, double media, boolean aprovado) {
-        this.np1 = np1;
-        this.np2 = np2;
-        this.reposicao = reposicao;
-        this.exame = exame;
-        this.media = media;
-        this.aprovado = aprovado;
-    }
-
     public void calcularMedia(double np1, double np2, double reposicao) {
         if(np1 < reposicao && np1 < np2) {
             //caso np1 seja a menor nota
@@ -44,7 +35,7 @@ public abstract class Rendimento {
     public void cadastrarRendimento(Scanner scan, Aluno aluno, Curso curso, String nivelCurso) {
         int idAluno = lerIdAluno(scan);
         scan.nextLine();
-        String nomeAluno = getNomeAluno(aluno, idAluno);
+        getAluno(aluno, idAluno);
         System.out.println("Digite a nota da NP1: ");
         np1 = lerNotaAluno(scan);
         System.out.println("Digite a nota da NP2: ");
@@ -58,7 +49,7 @@ public abstract class Rendimento {
         try {
             FileWriter fr = new FileWriter(nomeArquivo, true);
             BufferedWriter br = new BufferedWriter(fr);
-            br.write(idAluno+",");
+            br.write(idAluno+","+np1+","+np2+","+reposicao+","+exame);
             br.close();
         } catch(IOException e) {
             System.out.println("Erro ao cadastrar o rendimento: " + e.getMessage());
@@ -70,8 +61,8 @@ public abstract class Rendimento {
         return scan.nextInt();
     }
 
-    private int lerNotaAluno(Scanner scan) {
-        int nota = scan.nextInt();
+    private double lerNotaAluno(Scanner scan) {
+        double nota = scan.nextDouble();
         scan.nextLine();
         return nota;
     }
@@ -88,7 +79,7 @@ public abstract class Rendimento {
 
     //formata uma string para acessar o arquivo csv do respectivo curso
     private String formatarCurso(String nomeCurso, String cursoNivel, int anoCurso) {
-        if(cursoNivel == "1") {
+        if(cursoNivel.equals("1")) {
             cursoNivel = "GRADUACAO";
         } else {
             cursoNivel = "POS-GRADUACAO";
@@ -104,61 +95,22 @@ public abstract class Rendimento {
     public abstract void validarMedia(double media);
 
     // Getters e setters
-    public String getNomeAluno(Aluno aluno, int idAluno) {
+    public void getAluno(Aluno aluno, int idAluno) {
         //faz referência ao HashMap 'alunos' da classe 'Aluno'
         HashMap alunos = aluno.getAlunosHashMap();
         //verifica se o HashMap possui a chave com o valor de 'idAluno'
         if(alunos.containsKey(idAluno)) {
             System.out.println(alunos.get(idAluno));
-            return (String) alunos.get(idAluno);
         } else {
             System.out.println("Aluno não encontrado\n");
-            return null;
         }
     }
 
-    public double getNP1() {
-        return np1;
-    }
-
-    public void setNP1(double np1) {
-        this.np1 = np1;
-    }
-
-    public double getNP2() {
-        return np2;
-    }
-
-    public void setNP2(double np2) {
-        this.np2 = np2;
-    }
-
-    public double getReposicao() {
-        return reposicao;
-    }
-
-    public void setReposicao(double reposicao) {
-        this.reposicao = reposicao;
-    }
-
-    public double getExame() {
+    public double lerExame() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Digite a nota do exame: ");
+        exame = scan.nextDouble();
         return exame;
-    }
-
-    public void setExame(double exame) {
-        this.exame = exame;
-    }
-
-    public double getMedia() {
-        return media;
-    }
-
-    public void setMedia(double media) {
-        this.media = media;
-    }
-
-    public boolean getAprovado() {
-        return aprovado;
     }
 
     public void setAprovado(boolean aprovado) {
