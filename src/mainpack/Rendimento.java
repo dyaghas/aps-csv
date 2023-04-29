@@ -1,7 +1,5 @@
 package mainpack;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -21,15 +19,6 @@ public abstract class Rendimento {
     public Rendimento() {
     }
 
-    public Rendimento(double np1, double np2, double reposicao, double exame, double media, boolean aprovado) {
-        this.np1 = np1;
-        this.np2 = np2;
-        this.reposicao = reposicao;
-        this.exame = exame;
-        this.media = media;
-        this.aprovado = aprovado;
-    }
-
     public void calcularMedia(double np1, double np2, double reposicao) {
         if(np1 < reposicao && np1 < np2) {
             //caso np1 seja a menor nota
@@ -38,24 +27,37 @@ public abstract class Rendimento {
             //caso np2 seja a menor nota
             media = (np1 + reposicao) / 2;
         } else {
-            //caso nRepo seja a menor nota
+            //caso reposicao seja a menor nota
             media = (np1 + np2) / 2;
         }
         validarMedia(media);
     }
 
+    public abstract void validarMedia(double media);
+
     public void cadastrarRendimento(Scanner scan, Aluno aluno, Curso curso, String nivelCurso) {
         int idAluno = lerIdAluno(scan);
         scan.nextLine();
-        String nomeAluno = getNomeAluno(aluno, idAluno);
+        getAluno(aluno, idAluno);
+        System.out.println("Digite a nota da NP1: ");
+        np1 = lerNotaAluno(scan);
+        System.out.println("Digite a nota da NP2: ");
+        np2 = lerNotaAluno(scan);
+        System.out.println("Digite a nota da reposição: ");
+        reposicao = lerNotaAluno(scan);
+        calcularMedia(np1, np2, reposicao);
         String nomeCurso = lerNomeCurso(scan);
         int anoCurso = lerAnoCurso(scan);
         String nomeArquivo = formatarCurso(nomeCurso, nivelCurso, anoCurso);
         try {
-            FileWriter fr = new FileWriter(nomeArquivo, true);
-            BufferedWriter br = new BufferedWriter(fr);
-            br.write(idAluno+",");
-            br.close();
+            if(new File(nomeArquivo).isFile()) {
+                FileWriter fr = new FileWriter(nomeArquivo, true);
+                BufferedWriter br = new BufferedWriter(fr);
+                br.write(idAluno + "," + np1 + "," + np2 + "," + reposicao + "," + exame);
+                br.close();
+            } else {
+                System.out.println("Curso não encontrado");
+            }
         } catch(IOException e) {
             System.out.println("Erro ao cadastrar o rendimento: " + e.getMessage());
         }
@@ -66,8 +68,14 @@ public abstract class Rendimento {
         return scan.nextInt();
     }
 
+    private double lerNotaAluno(Scanner scan) {
+        double nota = scan.nextDouble();
+        scan.nextLine();
+        return nota;
+    }
+
     private String lerNomeCurso(Scanner scan) {
-        System.out.print("Digite o nome do curso:");
+        System.out.print("Digite o nome do curso: ");
         return scan.nextLine();
     }
 
@@ -78,80 +86,54 @@ public abstract class Rendimento {
 
     //formata uma string para acessar o arquivo csv do respectivo curso
     private String formatarCurso(String nomeCurso, String cursoNivel, int anoCurso) {
-        if(cursoNivel == "1") {
+        if(cursoNivel.equals("1")) {
             cursoNivel = "GRADUACAO";
         } else {
             cursoNivel = "POS-GRADUACAO";
         }
         String nomeArquivo = "./"+nomeCurso+"_"+cursoNivel+"_"+anoCurso;
-        nomeArquivo = nomeArquivo.replaceAll(" ", "-");
-        //transforma em uppercase e adiciona a extensão .csv
-        nomeArquivo = nomeArquivo.toUpperCase() + ".csv";
-        System.out.println(nomeArquivo);
+        nomeArquivo = formatarRegexArquivo(nomeArquivo);
         return nomeArquivo;
     }
 
-    public abstract void validarMedia(double media);
+    private String formatarRegexArquivo(String nomeArquivo) {
+        //substitui espaços por -
+        nomeArquivo = nomeArquivo.replaceAll(" ", "-");
+        //transforma ç em c ((?i) significa 'case insensitive')
+        nomeArquivo = nomeArquivo.replaceAll("(?i)ç", "c");
+        nomeArquivo = nomeArquivo.replaceAll("(?i)ã", "a");
+        nomeArquivo = nomeArquivo.replaceAll("(?i)í", "i");
+        nomeArquivo = nomeArquivo.replaceAll("(?i)ê", "e");
+        //transforma em uppercase e adiciona a extensão .csv
+        nomeArquivo = nomeArquivo.toUpperCase() + ".csv";
+        return nomeArquivo;
+    }
 
     // Getters e setters
-    public String getNomeAluno(Aluno aluno, int idAluno) {
+    public void getAluno(Aluno aluno, int idAluno) {
         //faz referência ao HashMap 'alunos' da classe 'Aluno'
         HashMap alunos = aluno.getAlunosHashMap();
         //verifica se o HashMap possui a chave com o valor de 'idAluno'
         if(alunos.containsKey(idAluno)) {
             System.out.println(alunos.get(idAluno));
-            return (String) alunos.get(idAluno);
         } else {
             System.out.println("Aluno não encontrado\n");
-            return null;
         }
     }
 
-    public double getNP1() {
-        return np1;
-    }
-
-    public void setNP1(double np1) {
-        this.np1 = np1;
-    }
-
-    public double getNP2() {
-        return np2;
-    }
-
-    public void setNP2(double np2) {
-        this.np2 = np2;
-    }
-
-    public double getReposicao() {
-        return reposicao;
-    }
-
-    public void setReposicao(double reposicao) {
-        this.reposicao = reposicao;
-    }
-
-    public double getExame() {
+    public double lerExame() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Digite a nota do exame: ");
+        exame = scan.nextDouble();
         return exame;
-    }
-
-    public void setExame(double exame) {
-        this.exame = exame;
-    }
-
-    public double getMedia() {
-        return media;
-    }
-
-    public void setMedia(double media) {
-        this.media = media;
-    }
-
-    public boolean getAprovado() {
-        return aprovado;
     }
 
     public void setAprovado(boolean aprovado) {
         this.aprovado = aprovado;
+        if(aprovado) {
+            System.out.println("O aluno está aprovado");
+        } else {
+            System.out.println("O aluno não está aprovado");
+        }
     }
 }

@@ -1,6 +1,6 @@
 package mainpack;
 
-import java.util.HashMap;
+import java.util.Scanner;
 
 public class RendimentoGrad extends Rendimento {
 
@@ -12,7 +12,7 @@ public class RendimentoGrad extends Rendimento {
         if(media >= 7) {
             setAprovado(true);
         } else {
-            media = (media + getExame()) / 2;
+            media = (media + lerExame()) / 2;
             if(media >= 5) {
                 setAprovado(true);
             }
