@@ -19,6 +19,7 @@ public class Curso implements CsvInterface {
         System.out.println(cursos);
     }
 
+    //instancia o arquivo csv na lista
     public void lerCsv() {
         try (BufferedReader br = new BufferedReader(new FileReader(cursoCsv))) {
             String linha;
@@ -30,6 +31,7 @@ public class Curso implements CsvInterface {
         }
     }
 
+    //Realiza as operações de leitura em cada linha do csv
     private void processaLinhaCsv(String linha) {
         String[] parte = linha.split(",");
         String nome = parte[0];

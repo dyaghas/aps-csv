@@ -57,6 +57,7 @@ public class Aluno implements CsvInterface {
         return str.toString();
     }
 
+    // Cadastra o aluno em "alunos.csv"
     public void cadastrarDadoCsv(@NotNull Scanner scan) {
         System.out.print("Digite o nome do aluno: ");
         String nome = scan.nextLine();
@@ -78,6 +79,7 @@ public class Aluno implements CsvInterface {
         }
     }
 
+    //método responsável por escolher qual será o id do próximo aluno cadastrado
     public void updateMaxId(int id) {
         if(id > maxId) {
             maxId = id;

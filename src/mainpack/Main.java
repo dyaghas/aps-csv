@@ -10,7 +10,7 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         Aluno alunos = new Aluno();
         Curso cursos = new Curso();
-        RendimentoGrad rendimento = new RendimentoGrad();
+        RendimentoGrad rendimentoGrad = new RendimentoGrad();
         RendimentoPosGrad rendimentoPosGrad = new RendimentoPosGrad();
 
         while(true) {
@@ -51,13 +51,13 @@ public class Main {
                         cursos.deletarCurso(scan);
                         break;
                     case 7:
-                        System.out.println("Digite o nível do curso ([1] graduação ou [2] pós-graduação): ");
+                        System.out.print("Digite o nível do curso ([1] graduação ou [2] pós-graduação): ");
                         int nivelCurso = scan.nextInt();
                         scan.nextLine();
                         if(nivelCurso == 1) {
-                            rendimento.cadastrarRendimento(scan, alunos);
+                            rendimentoGrad.cadastrarRendimento(scan, alunos, cursos, "1");
                         } else if(nivelCurso == 2) {
-                            rendimentoPosGrad.cadastrarRendimento(scan, alunos);
+                            rendimentoPosGrad.cadastrarRendimento(scan, alunos, cursos, "2");
                         } else {
                             System.out.println("Valor inválido\n");
                         }
