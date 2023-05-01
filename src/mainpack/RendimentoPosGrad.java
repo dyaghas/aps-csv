@@ -1,7 +1,5 @@
 package mainpack;
 
-import java.util.HashMap;
-
 public class RendimentoPosGrad extends Rendimento {
 
     public RendimentoPosGrad() {

@@ -1,7 +1,5 @@
 package mainpack;
 
-import java.util.Scanner;
-
 public class RendimentoGrad extends Rendimento {
 
     public RendimentoGrad() {

@@ -102,43 +102,47 @@ public class Curso implements CsvInterface {
     }
 
     // Deleta o curso do arquivo CSV e seu arquivo CSV
-    public void deletarCurso(Scanner scan) throws IOException {
-        System.out.print("Digite o nome do curso: ");
-        String nomeCurso = scan.nextLine().toUpperCase();
-        //verifica se o curso é de graduação ou pós-graduação
-        String nivelCurso = verificarNivelCurso(scan);
-        System.out.print("Digite o ano do curso: ");
-        int anoCurso = scan.nextInt();
-        scan.nextLine();
-        File cursoCsv = new File("./cursos.csv");
-        Scanner scanner = new Scanner(cursoCsv);
-        boolean encontrado = false;
-        String linhaRemover = null;
-        while (scanner.hasNextLine()) {
-            String linha = scanner.nextLine();
-            String[] dados = linha.split(",");
-            if (dados[0].equals(nomeCurso) && dados[1].equals(nivelCurso) && dados[2].equals(String.valueOf(anoCurso))) {
-                encontrado = true;
-                linhaRemover = linha;
-                break;
+    public void deletarCurso(Scanner scan) {
+        try {
+            System.out.print("Digite o nome do curso: ");
+            String nomeCurso = scan.nextLine().toUpperCase();
+            //verifica se o curso é de graduação ou pós-graduação
+            String nivelCurso = verificarNivelCurso(scan);
+            System.out.print("Digite o ano do curso: ");
+            int anoCurso = scan.nextInt();
+            scan.nextLine();
+            File cursoCsv = new File("./cursos.csv");
+            Scanner scanner = new Scanner(cursoCsv);
+            boolean encontrado = false;
+            String linhaRemover = null;
+            while (scanner.hasNextLine()) {
+                String linha = scanner.nextLine();
+                String[] dados = linha.split(",");
+                if (dados[0].equals(nomeCurso) && dados[1].equals(nivelCurso) && dados[2].equals(String.valueOf(anoCurso))) {
+                    encontrado = true;
+                    linhaRemover = linha;
+                    break;
+                }
             }
-        }
-        scanner.close();
-    
-        if (encontrado) {
-            String cursos = new String(Files.readAllBytes(Paths.get("./cursos.csv")));
-            cursos = cursos.replaceAll(linhaRemover + "\n", "");
-            Files.write(Paths.get("./cursos.csv"), cursos.getBytes());
-    
-            String nomeArquivo = nomeCurso.replaceAll(" ", "-")+"_"+nivelCurso+"_"+anoCurso+".csv";
-            File arquivoCsv = new File(nomeArquivo);
-            if (arquivoCsv.delete()) {
-                System.out.println("Curso e arquivo CSV removidos com sucesso.");
+            scanner.close();
+
+            if (encontrado) {
+                String cursos = new String(Files.readAllBytes(Paths.get("./cursos.csv")));
+                cursos = cursos.replaceAll(linhaRemover + "\n", "");
+                Files.write(Paths.get("./cursos.csv"), cursos.getBytes());
+
+                String nomeArquivo = nomeCurso.replaceAll(" ", "-") + "_" + nivelCurso + "_" + anoCurso + ".csv";
+                File arquivoCsv = new File(nomeArquivo);
+                if (arquivoCsv.delete()) {
+                    System.out.println("Curso e arquivo CSV removidos com sucesso.");
+                } else {
+                    System.out.println("Erro ao remover o arquivo CSV.");
+                }
             } else {
-                System.out.println("Erro ao remover o arquivo CSV.");
+                System.out.println("Curso não encontrado.");
             }
-        } else {
-            System.out.println("Curso não encontrado.");
+        } catch(IOException e) {
+            System.out.println(e.getMessage());
         }
     }
     // Exibe os cursos cadastrados
