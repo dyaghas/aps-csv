@@ -1,7 +1,5 @@
 package mainpack;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -46,6 +44,7 @@ public class Aluno implements CsvInterface {
         String alunosStr = gerarStringAlunos();
         System.out.println(alunosStr);
     }
+
     private String gerarStringAlunos() {
         StringBuilder str = new StringBuilder();
         System.out.println("id nome");
@@ -58,7 +57,7 @@ public class Aluno implements CsvInterface {
     }
 
     // Cadastra o aluno em "alunos.csv"
-    public void cadastrarDadoCsv(@NotNull Scanner scan) {
+    public void cadastrarDadoCsv(Scanner scan) {
         System.out.print("Digite o nome do aluno: ");
         String nome = scan.nextLine();
         if(verificarNome(nome)) {
@@ -72,10 +71,10 @@ public class Aluno implements CsvInterface {
                 System.out.println(newId + " " + nome);
                 br.close();
             } catch(IOException e) {
-                System.out.println("Erro ao cadastrar aluno: " + e.getMessage());
+                System.out.println("\nErro ao cadastrar aluno: " + e.getMessage());
             }
         } else {
-            System.out.println("Nome deve conter entre 3 e 50 caracteres");
+            System.out.println("\nNome deve conter entre 3 e 50 caracteres\n");
         }
     }
 
@@ -89,8 +88,6 @@ public class Aluno implements CsvInterface {
     public boolean verificarNome(String nome) {
         return nome.length() >= 3 && nome.length() <= 50;
     }
-
-    //getters e setters
 
     public HashMap getAlunosHashMap() {
         return this.alunos;
