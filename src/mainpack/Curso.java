@@ -53,7 +53,7 @@ public class Curso implements CsvInterface {
         if (nivelCurso.equals("1")) {
             nivelCurso = "GRADUACAO";
         } else {
-            nivelCurso = "POS_GRADUACAO";
+            nivelCurso = "POS-GRADUACAO";
         }
 
         System.out.print("Digite o ano do curso: ");

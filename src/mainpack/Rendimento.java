@@ -93,6 +93,7 @@ public abstract class Rendimento {
         }
         String nomeArquivo = "./"+nomeCurso+"_"+cursoNivel+"_"+anoCurso;
         nomeArquivo = formatarRegexArquivo(nomeArquivo);
+        System.out.println(nomeArquivo);
         return nomeArquivo;
     }
 
