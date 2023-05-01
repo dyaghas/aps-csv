@@ -101,9 +101,14 @@ public abstract class Rendimento {
         nomeArquivo = nomeArquivo.replaceAll(" ", "-");
         //transforma ç em c ((?i) significa 'case insensitive')
         nomeArquivo = nomeArquivo.replaceAll("(?i)ç", "c");
+        nomeArquivo = nomeArquivo.replaceAll("(?i)á", "a");
         nomeArquivo = nomeArquivo.replaceAll("(?i)ã", "a");
         nomeArquivo = nomeArquivo.replaceAll("(?i)í", "i");
         nomeArquivo = nomeArquivo.replaceAll("(?i)ê", "e");
+        nomeArquivo = nomeArquivo.replaceAll("(?i)é", "e");
+        nomeArquivo = nomeArquivo.replaceAll("(?i)é", "a");
+        nomeArquivo = nomeArquivo.replaceAll("(?i)ô", "o");
+        nomeArquivo = nomeArquivo.replaceAll("(?i)ú", "u");
         //transforma em uppercase e adiciona a extensão .csv
         nomeArquivo = nomeArquivo.toUpperCase() + ".csv";
         return nomeArquivo;

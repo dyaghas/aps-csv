@@ -11,7 +11,7 @@ public class Curso implements CsvInterface {
     private int ano;
     private File cursoCsv = new File("./cursos.csv");
 
-    //hashmap que guarda as linhas do arquivo cursos.csv
+    //lista que guarda as linhas do arquivo cursos.csv
     ArrayList<String> cursos = new ArrayList<>();
 
     public Curso() {
