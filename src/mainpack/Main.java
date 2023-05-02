@@ -23,6 +23,7 @@ public class Main {
                     "5 - Cadastrar curso\n" +
                     "6 - Deletar curso\n" +
                     "7 - Cadastrar rendimento\n" +
+                    "8 - Exibir alunos de um curso\n" +
                     "\nDigite o número correspondente a ação que deseja realizar: "
             );
             try {
@@ -61,6 +62,9 @@ public class Main {
                         } else {
                             System.out.println("Valor inválido\n");
                         }
+                        break;
+                    case 8:
+                        cursos.exibirAlunosCurso(scan);
                         break;
                     default:
                         System.out.println("\nEntrada incorreta\n");

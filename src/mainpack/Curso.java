@@ -191,4 +191,33 @@ public class Curso implements CsvInterface {
             System.out.println("Não foi possível encontrar o arquivo /cursos.csv");
         }
     }
+
+    // Exibe os alunos e suas notas de um curso (nome,nivel,ano) específico
+    public void exibirAlunosCurso(Scanner scan) {
+        System.out.print("Digite o nome do curso: ");
+        String nomeCurso = scan.nextLine().toUpperCase();
+        //verifica se o curso é de graduação ou pós-graduação
+        String nivelCurso = verificarNivelCurso(scan);
+        System.out.print("Digite o ano do curso: ");
+        int anoCurso = scan.nextInt();
+        scan.nextLine();
+        String nomeArquivo = nomeCurso.replaceAll(" ", "-") + "_" + nivelCurso + "_" + anoCurso + ".csv";
+        try {
+            File cursoCsv = new File(nomeArquivo);
+            Scanner scanner = new Scanner(cursoCsv);
+            while (scanner.hasNextLine()) {
+                String linha = scanner.nextLine();
+                String[] dados = linha.split(",");
+                System.out.println("Nome: " + dados[0]);
+                System.out.println("NP1: " + dados[1]);
+                System.out.println("NP2: " + dados[2]);
+                System.out.println("Reposicao: " + dados[3]);
+                System.out.println("Exame: " + dados[4]);
+                System.out.println();
+            }
+            scanner.close();
+        } catch(FileNotFoundException e) {
+            System.out.println("Não foi possível encontrar o arquivo " + nomeArquivo);
+        }
+    }
 }
