@@ -29,7 +29,7 @@ public class Aluno implements CsvInterface {
     }
     //Realiza as operações de leitura em cada linha do csv
     private void processaLinhaCsv(String linha) {
-        String[] parte = linha.split(",");
+        String[] parte = linha.split(";");
         //condicional que evita parse do nome da coluna 'id' para int
         if(!parte[0].equals("id")) {
             int id = Integer.parseInt(parte[0]);
@@ -66,7 +66,7 @@ public class Aluno implements CsvInterface {
                 BufferedWriter br = new BufferedWriter(fr);
                 int newId = getNewId();
                 br.newLine();
-                br.write(newId + "," + nome);
+                br.write(newId + ";" + nome);
                 alunos.put(newId, nome);
                 System.out.println(newId + " " + nome);
                 br.close();
