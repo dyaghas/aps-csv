@@ -35,7 +35,7 @@ public abstract class Rendimento {
 
     public abstract void validarMedia(double media);
 
-    public void cadastrarRendimento(Scanner scan, Aluno aluno, Curso curso, String nivelCurso) {
+    public void cadastrarRendimento(Scanner scan, Aluno aluno, String nivelCurso) {
         int idAluno = lerIdAluno(scan);
         scan.nextLine();
         if(getAluno(aluno, idAluno)) {
@@ -53,7 +53,7 @@ public abstract class Rendimento {
                 if (new File(nomeArquivo).isFile()) {
                     FileWriter fr = new FileWriter(nomeArquivo, true);
                     BufferedWriter br = new BufferedWriter(fr);
-                    br.write(idAluno + "," + np1 + "," + np2 + "," + reposicao + "," + exame + "\n");
+                    br.write(idAluno + ";" + np1 + ";" + np2 + ";" + reposicao + ";" + exame + "\n");
                     br.close();
                 } else {
                     System.out.println("Curso não encontrado");
@@ -99,17 +99,17 @@ public abstract class Rendimento {
     }
 
     private String formatarRegexArquivo(String nomeArquivo) {
+        nomeArquivo.toUpperCase();
         //substituição de caracteres especiais
         nomeArquivo = nomeArquivo.replaceAll(" ", "-");
-        nomeArquivo = nomeArquivo.replaceAll("(?i)ç", "c");
-        nomeArquivo = nomeArquivo.replaceAll("(?i)á", "a");
-        nomeArquivo = nomeArquivo.replaceAll("(?i)ã", "a");
-        nomeArquivo = nomeArquivo.replaceAll("(?i)í", "i");
-        nomeArquivo = nomeArquivo.replaceAll("(?i)ê", "e");
-        nomeArquivo = nomeArquivo.replaceAll("(?i)é", "e");
-        nomeArquivo = nomeArquivo.replaceAll("(?i)é", "a");
-        nomeArquivo = nomeArquivo.replaceAll("(?i)ô", "o");
-        nomeArquivo = nomeArquivo.replaceAll("(?i)ú", "u");
+        nomeArquivo = nomeArquivo.replaceAll("Ç", "C");
+        nomeArquivo = nomeArquivo.replaceAll("Á", "A");
+        nomeArquivo = nomeArquivo.replaceAll("Ã", "A");
+        nomeArquivo = nomeArquivo.replaceAll("Í", "I");
+        nomeArquivo = nomeArquivo.replaceAll("Ê", "E");
+        nomeArquivo = nomeArquivo.replaceAll("É", "E");
+        nomeArquivo = nomeArquivo.replaceAll("Ô", "O");
+        nomeArquivo = nomeArquivo.replaceAll("Ú", "U");
         //transforma em uppercase e adiciona a extensão .csv
         nomeArquivo = nomeArquivo.toUpperCase() + ".csv";
         return nomeArquivo;

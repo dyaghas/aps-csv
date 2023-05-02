@@ -56,9 +56,9 @@ public class Main {
                         int nivelCurso = scan.nextInt();
                         scan.nextLine();
                         if(nivelCurso == 1) {
-                            rendimentoGrad.cadastrarRendimento(scan, alunos, cursos, "1");
+                            rendimentoGrad.cadastrarRendimento(scan, alunos, "1");
                         } else if(nivelCurso == 2) {
-                            rendimentoPosGrad.cadastrarRendimento(scan, alunos, cursos, "2");
+                            rendimentoPosGrad.cadastrarRendimento(scan, alunos, "2");
                         } else {
                             System.out.println("Valor inválido\n");
                         }

@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class Curso implements CsvInterface {
-    private File cursoCsv = new File("./cursos.csv");
+    private final File cursoCsv = new File("./cursos.csv");
 
     //lista que guarda as linhas do arquivo cursos.csv
     ArrayList<String> cursos = new ArrayList<>();
@@ -30,7 +30,7 @@ public class Curso implements CsvInterface {
 
     //Realiza as operações de leitura em cada linha do csv
     private void processaLinhaCsv(String linha) {
-        String[] parte = linha.split(",");
+        String[] parte = linha.split(";");
         String nome = parte[0];
         String nivel = parte[1];
         int ano = Integer.parseInt(parte[2]);
@@ -52,7 +52,7 @@ public class Curso implements CsvInterface {
             boolean existe = false;
             while (scanner.hasNextLine()) {
                 String linha = scanner.nextLine();
-                String[] dados = linha.split(",");
+                String[] dados = linha.split(";");
                 if (dados[0].equals(nomeCurso) && dados[1].equals(nivelCurso) && dados[2].equals(String.valueOf(anoCurso))) {
                     existe = true;
                     break;
@@ -63,9 +63,9 @@ public class Curso implements CsvInterface {
             if (!existe) {
                 FileWriter writer = new FileWriter("./cursos.csv", true);
                 writer.append(nomeCurso);
-                writer.append(",");
+                writer.append(";");
                 writer.append(nivelCurso);
-                writer.append(",");
+                writer.append(";");
                 writer.append(String.valueOf(anoCurso));
                 writer.append("\n");
                 writer.close();
@@ -117,7 +117,7 @@ public class Curso implements CsvInterface {
             String linhaRemover = null;
             while (scanner.hasNextLine()) {
                 String linha = scanner.nextLine();
-                String[] dados = linha.split(",");
+                String[] dados = linha.split(";");
                 if (dados[0].equals(nomeCurso) && dados[1].equals(nivelCurso) && dados[2].equals(String.valueOf(anoCurso))) {
                     encontrado = true;
                     linhaRemover = linha;
@@ -152,7 +152,7 @@ public class Curso implements CsvInterface {
             Scanner scanner = new Scanner(cursoCsv);
             while (scanner.hasNextLine()) {
                 String linha = scanner.nextLine();
-                String[] dados = linha.split(",");
+                String[] dados = linha.split(";");
                 System.out.println("Nome: " + dados[0]);
                 System.out.println("Nível: " + dados[1]);
                 System.out.println("Ano: " + dados[2]);
@@ -178,7 +178,7 @@ public class Curso implements CsvInterface {
             Scanner scanner = new Scanner(cursoCsv);
             while (scanner.hasNextLine()) {
                 String linha = scanner.nextLine();
-                String[] dados = linha.split(",");
+                String[] dados = linha.split(";");
                 if (dados[2].equals(String.valueOf(anoCurso))) {
                     System.out.println("Nome: " + dados[0]);
                     System.out.println("Nível: " + dados[1]);
