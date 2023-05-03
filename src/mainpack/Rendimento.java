@@ -4,7 +4,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public abstract class Rendimento {
@@ -203,4 +205,94 @@ public abstract class Rendimento {
         }
     }
 
+    // Digite o ID de um aluno e mostre suas notas, média e se está aprovado ou não em todas as disciplinas cursadas por ele, independente do curso, ano e nível
+    public void exibirRendimentoAluno(Scanner scan) {
+        int idAluno = lerIdAluno(scan);
+        try {
+            //percorre todos os arquivos csv
+            for (File file : new File(".").listFiles()) {
+                if (file.getName().endsWith(".csv") && 
+                    !file.getName().equals("alunos.csv") && 
+                    !file.getName().equals("cursos.csv")) {
+                    String nomeArquivo = file.getName();
+                    Scanner scanArquivo = new Scanner(file);
+                    while(scanArquivo.hasNextLine()) {
+                        String linha = scanArquivo.nextLine();
+                        String[] dados = linha.split(";");
+                        int idAlunoArquivo = 0;
+                        try {
+                            idAlunoArquivo = Integer.parseInt(dados[0]);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Erro ao converter a string em número inteiro: " + e.getMessage());
+                            System.out.println("String com erro: " + linha);
+                            continue; // pula para a próxima iteração
+                        }
+                        if(idAluno == idAlunoArquivo) {
+                            np1 = Double.parseDouble(dados[1]);
+                            np2 = Double.parseDouble(dados[2]);
+                            reposicao = Double.parseDouble(dados[3]);
+                            exame = Double.parseDouble(dados[4]);
+                            media = calcularMedia(np1, np2, reposicao);
+                            validarMedia(media, exame);
+                            System.out.println("id: " + idAluno + " | media: " + media + " | aprovado: " + aprovado + " | curso: " + nomeArquivo);
+                        }
+                    }
+                    scanArquivo.close();
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao exibir o rendimento do aluno: " + e.getMessage());
+        }
+    }
+
+    // Pega todas as médias de um aluno, em todos os cursos, anos e níveis, e mostra a média das médias
+    public void exibirMediaGeralAluno(Scanner scan) {
+        int idAluno = lerIdAluno(scan);
+        List<Double> notas = new ArrayList<>();
+        try {
+            //percorre todos os arquivos csv
+            for (File file : new File(".").listFiles()) {
+                if (file.getName().endsWith(".csv") && 
+                    !file.getName().equals("alunos.csv") && 
+                    !file.getName().equals("cursos.csv")) {
+                    Scanner scanArquivo = new Scanner(file);
+                    while(scanArquivo.hasNextLine()) {
+                        String linha = scanArquivo.nextLine();
+                        String[] dados = linha.split(";");
+                        int idAlunoArquivo = 0;
+                        try {
+                            idAlunoArquivo = Integer.parseInt(dados[0]);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Erro ao converter a string em número inteiro: " + e.getMessage());
+                            System.out.println("String com erro: " + linha);
+                            continue; // pula para a próxima iteração
+                        }
+                        if(idAluno == idAlunoArquivo) {
+                            double np1 = Double.parseDouble(dados[1]);
+                            double np2 = Double.parseDouble(dados[2]);
+                            double reposicao = Double.parseDouble(dados[3]);
+                            double exame = Double.parseDouble(dados[4]);
+                            double media = calcularMedia(np1, np2, reposicao);
+                            validarMedia(media, exame);
+                            notas.add(media);
+                        }
+                    }
+                    scanArquivo.close();
+                }
+            }
+            double mediaGeral = calcularMediaGeral(notas);
+            System.out.println("media geral: " + mediaGeral);
+        } catch (IOException e) {
+            System.out.println("Erro ao exibir a média geral do aluno: " + e.getMessage());
+        }
+    }
+    
+    private double calcularMediaGeral(List<Double> notas) {
+        double soma = 0;
+        for (double nota : notas) {
+            soma += nota;
+        }
+        return soma / notas.size();
+    }
+    
 }
