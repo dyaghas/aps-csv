@@ -142,7 +142,7 @@ public abstract class Rendimento {
 
     //Exibe alunos de um curso específico, mostrando seus id's, médias
     //(considerando graduação ou pós-graduação) e se estão aprovados ou não
-    public void exibirRendimento(Scanner scan, Aluno aluno, String nivelCurso) {
+    public void exibirRendimento(Scanner scan, String nivelCurso) {
         String nomeCurso = lerNomeCurso(scan);
         int anoCurso = lerAnoCurso(scan);
         String nomeArquivo = formatarCurso(nomeCurso, nivelCurso, anoCurso);
