@@ -143,4 +143,31 @@ public abstract class Rendimento {
             System.out.println("\nO aluno não está aprovado\n");
         }
     }
+
+    // Exibe alunos de um curso específico, mostrando seus id's, médias (considerando graduação ou pós-graduação) e se estão aprovados ou não
+    public void exibirRendimento(Scanner scan, Aluno aluno, String nivelCurso) {
+        String nomeCurso = lerNomeCurso(scan);
+        int anoCurso = lerAnoCurso(scan);
+        String nomeArquivo = formatarCurso(nomeCurso, nivelCurso, anoCurso);
+        try {
+            if (new File(nomeArquivo).isFile()) {
+                Scanner scanArquivo = new Scanner(new File(nomeArquivo));
+                while(scanArquivo.hasNextLine()) {
+                    String linha = scanArquivo.nextLine();
+                    String[] dados = linha.split(";");
+                    int idAluno = Integer.parseInt(dados[0]);
+                    np1 = Double.parseDouble(dados[1]);
+                    np2 = Double.parseDouble(dados[2]);
+                    reposicao = Double.parseDouble(dados[3]);
+                    calcularMedia(np1, np2, reposicao);
+                    System.out.println("id: " + idAluno + " | media: " + media + " | aprovado: " + aprovado);
+                }
+                scanArquivo.close();
+            } else {
+                System.out.println("Curso não encontrado");
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao exibir o rendimento: " + e.getMessage());
+        }
+    }
 }
