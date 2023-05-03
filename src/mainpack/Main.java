@@ -69,9 +69,9 @@ public class Main {
                         nivelCurso = scan.nextInt();
                         scan.nextLine();
                         if(nivelCurso == 1) {
-                            rendimentoGrad.exibirRendimento(scan, alunos, "1");
+                            rendimentoGrad.exibirRendimento(scan, "1");
                         } else if(nivelCurso == 2) {
-                            rendimentoPosGrad.exibirRendimento(scan, alunos, "2");
+                            rendimentoPosGrad.exibirRendimento(scan, "2");
                         } else {
                             System.out.println("Valor inválido\n");
                         }
