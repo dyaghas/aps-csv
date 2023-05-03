@@ -25,6 +25,8 @@ public class Main {
                     "7 - Cadastrar rendimento\n" +
                     "8 - Exibir status dos alunos em um curso\n" +
                     "9 - Exibir a média geral de um curso\n" +
+                    "10 - Exibe todos os cursos que o aluno está e seus dados\n" +
+                    "11 - Exibir a média geral de um aluno, baseando-se em todas as médias dele\n" +
                     "\nDigite o número correspondente a ação que deseja realizar: "
             );
             try {
@@ -88,6 +90,12 @@ public class Main {
                         } else {
                             System.out.println("Valor inválido\n");
                         }
+                        break;
+                    case 10:
+                        rendimentoGrad.exibirRendimentoAluno(scan);
+                        break;
+                    case 11:
+                        rendimentoGrad.exibirMediaGeralAluno(scan);
                         break;
                     default:
                         System.out.println("\nEntrada incorreta\n");
