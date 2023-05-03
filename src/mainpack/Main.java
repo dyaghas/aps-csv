@@ -64,7 +64,17 @@ public class Main {
                         }
                         break;
                     case 8:
-                        cursos.exibirAlunosCurso(scan);
+                        // Usa o método exibirRendimento() da classe RendimentoGrad ou RendimentoPosGrad
+                        System.out.print("Digite o nível do curso ([1] graduação ou [2] pós-graduação): ");
+                        nivelCurso = scan.nextInt();
+                        scan.nextLine();
+                        if(nivelCurso == 1) {
+                            rendimentoGrad.exibirRendimento(scan, alunos, "1");
+                        } else if(nivelCurso == 2) {
+                            rendimentoPosGrad.exibirRendimento(scan, alunos, "2");
+                        } else {
+                            System.out.println("Valor inválido\n");
+                        }
                         break;
                     default:
                         System.out.println("\nEntrada incorreta\n");
