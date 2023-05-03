@@ -169,4 +169,38 @@ public abstract class Rendimento {
             System.out.println("Erro ao exibir o rendimento: " + e.getMessage());
         }
     }
+
+    // Mostra na tela a média geral de um curso específico
+    public void exibirMediaGeral(Scanner scan, String nivelCurso) {
+        String nomeCurso = lerNomeCurso(scan);
+        int anoCurso = lerAnoCurso(scan);
+        String nomeArquivo = formatarCurso(nomeCurso, nivelCurso, anoCurso);
+        try {
+            if (new File(nomeArquivo).isFile()) {
+                Scanner scanArquivo = new Scanner(new File(nomeArquivo));
+                double mediaGeral = 0;
+                int cont = 0;
+                while(scanArquivo.hasNextLine()) {
+                    String linha = scanArquivo.nextLine();
+                    String[] dados = linha.split(";");
+                    np1 = Double.parseDouble(dados[1]);
+                    np2 = Double.parseDouble(dados[2]);
+                    reposicao = Double.parseDouble(dados[3]);
+                    exame = Double.parseDouble(dados[4]);
+                    media = calcularMedia(np1, np2, reposicao);
+                    validarMedia(media, exame);
+                    mediaGeral += media;
+                    cont++;
+                }
+                scanArquivo.close();
+                mediaGeral = mediaGeral/cont;
+                System.out.println("media geral: " + mediaGeral);
+            } else {
+                System.out.println("Curso não encontrado");
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao exibir a média geral: " + e.getMessage());
+        }
+    }
+
 }

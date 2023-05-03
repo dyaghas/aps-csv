@@ -23,7 +23,8 @@ public class Main {
                     "5 - Cadastrar curso\n" +
                     "6 - Deletar curso\n" +
                     "7 - Cadastrar rendimento\n" +
-                    "8 - Exibir alunos de um curso\n" +
+                    "8 - Exibir status dos alunos em um curso\n" +
+                    "9 - Exibir a média geral de um curso\n" +
                     "\nDigite o número correspondente a ação que deseja realizar: "
             );
             try {
@@ -72,6 +73,18 @@ public class Main {
                             rendimentoGrad.exibirRendimento(scan, "1");
                         } else if(nivelCurso == 2) {
                             rendimentoPosGrad.exibirRendimento(scan, "2");
+                        } else {
+                            System.out.println("Valor inválido\n");
+                        }
+                        break;
+                    case 9:
+                        System.out.print("Digite o nível do curso ([1] graduação ou [2] pós-graduação): ");
+                        nivelCurso = scan.nextInt();
+                        scan.nextLine();
+                        if(nivelCurso == 1) {
+                            rendimentoGrad.exibirMediaGeral(scan, "1");
+                        } else if(nivelCurso == 2) {
+                            rendimentoPosGrad.exibirMediaGeral(scan, "2");
                         } else {
                             System.out.println("Valor inválido\n");
                         }
