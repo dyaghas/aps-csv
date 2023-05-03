@@ -19,7 +19,7 @@ public abstract class Rendimento {
     public Rendimento() {
     }
 
-    public void calcularMedia(double np1, double np2, double reposicao) {
+    public double calcularMedia(double np1, double np2, double reposicao) {
         if(np1 < reposicao && np1 < np2) {
             //caso np1 seja a menor nota
             media = (np2 + reposicao) / 2;
@@ -30,10 +30,10 @@ public abstract class Rendimento {
             //caso reposicao seja a menor nota
             media = (np1 + np2) / 2;
         }
-        validarMedia(media);
+        return media;
     }
 
-    public abstract void validarMedia(double media);
+    public abstract void validarMedia(double media, double exame);
 
     public void cadastrarRendimento(Scanner scan, Aluno aluno, String nivelCurso) {
         int idAluno = lerIdAluno(scan);
@@ -45,7 +45,8 @@ public abstract class Rendimento {
             np2 = lerNotaAluno(scan);
             System.out.print("Digite a nota da reposição: ");
             reposicao = lerNotaAluno(scan);
-            calcularMedia(np1, np2, reposicao);
+            media = calcularMedia(np1, np2, reposicao);
+            validarMedia(media, lerExame());
             String nomeCurso = lerNomeCurso(scan);
             int anoCurso = lerAnoCurso(scan);
             String nomeArquivo = formatarCurso(nomeCurso, nivelCurso, anoCurso);
@@ -137,14 +138,10 @@ public abstract class Rendimento {
 
     public void setAprovado(boolean aprovado) {
         this.aprovado = aprovado;
-        if(aprovado) {
-            System.out.println("\nO aluno está aprovado\n");
-        } else {
-            System.out.println("\nO aluno não está aprovado\n");
-        }
     }
 
-    // Exibe alunos de um curso específico, mostrando seus id's, médias (considerando graduação ou pós-graduação) e se estão aprovados ou não
+    //Exibe alunos de um curso específico, mostrando seus id's, médias
+    //(considerando graduação ou pós-graduação) e se estão aprovados ou não
     public void exibirRendimento(Scanner scan, Aluno aluno, String nivelCurso) {
         String nomeCurso = lerNomeCurso(scan);
         int anoCurso = lerAnoCurso(scan);
@@ -159,7 +156,9 @@ public abstract class Rendimento {
                     np1 = Double.parseDouble(dados[1]);
                     np2 = Double.parseDouble(dados[2]);
                     reposicao = Double.parseDouble(dados[3]);
-                    calcularMedia(np1, np2, reposicao);
+                    exame = Double.parseDouble(dados[4]);
+                    media = calcularMedia(np1, np2, reposicao);
+                    validarMedia(media, exame);
                     System.out.println("id: " + idAluno + " | media: " + media + " | aprovado: " + aprovado);
                 }
                 scanArquivo.close();

@@ -6,11 +6,11 @@ public class RendimentoPosGrad extends Rendimento {
     }
 
     @Override
-    public void validarMedia(double media) {
+    public void validarMedia(double media, double exame) {
         if(media >= 5) {
             setAprovado(true);
         } else {
-            media = (media + lerExame()) / 2;
+            media = (media + exame) / 2;
             if(media >= 5) {
                 setAprovado(true);
             }
