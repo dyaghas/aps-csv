@@ -29,7 +29,7 @@ public class Curso implements CsvInterface {
     }
 
     //Realiza as operações de leitura em cada linha do csv
-    private void processaLinhaCsv(String linha) {
+    public void processaLinhaCsv(String linha) {
         String[] parte = linha.split(";");
         String nome = parte[0];
         String nivel = parte[1];

@@ -17,6 +17,10 @@ public abstract class Rendimento {
     private double media;
     private boolean aprovado;
 
+    private final String graduacao = "GRADUACAO";
+    private final String posGraduacao = "POS-GRADUACAO";
+    private final String csvExtensao = ".csv";
+
     // Construtor do rendimento
     public Rendimento() {
     }
@@ -41,14 +45,17 @@ public abstract class Rendimento {
         int idAluno = lerIdAluno(scan);
         scan.nextLine();
         if(getAluno(aluno, idAluno)) {
+            //entrada de notas
             System.out.print("Digite a nota da NP1: ");
             np1 = lerNotaAluno(scan);
             System.out.print("Digite a nota da NP2: ");
             np2 = lerNotaAluno(scan);
             System.out.print("Digite a nota da reposição: ");
             reposicao = lerNotaAluno(scan);
+            //cálculo das notas
             media = calcularMedia(np1, np2, reposicao);
             validarMedia(media, lerExame());
+            //entradas do curso
             String nomeCurso = lerNomeCurso(scan);
             int anoCurso = lerAnoCurso(scan);
             String nomeArquivo = formatarCurso(nomeCurso, nivelCurso, anoCurso);
@@ -91,9 +98,9 @@ public abstract class Rendimento {
     //formata uma 'string' para acessar o arquivo csv do respectivo curso
     private String formatarCurso(String nomeCurso, String cursoNivel, int anoCurso) {
         if(cursoNivel.equals("1")) {
-            cursoNivel = "GRADUACAO";
+            cursoNivel = graduacao;
         } else {
-            cursoNivel = "POS-GRADUACAO";
+            cursoNivel = posGraduacao;
         }
         String nomeArquivo = "./"+nomeCurso+"_"+cursoNivel+"_"+anoCurso;
         nomeArquivo = formatarRegexArquivo(nomeArquivo);
@@ -114,7 +121,7 @@ public abstract class Rendimento {
         nomeArquivo = nomeArquivo.replaceAll("Ô", "O");
         nomeArquivo = nomeArquivo.replaceAll("Ú", "U");
         //transforma em uppercase e adiciona a extensão .csv
-        nomeArquivo = nomeArquivo.toUpperCase() + ".csv";
+        nomeArquivo = nomeArquivo.toUpperCase() + csvExtensao;
         return nomeArquivo;
     }
 
@@ -294,5 +301,4 @@ public abstract class Rendimento {
         }
         return soma / notas.size();
     }
-    
 }
