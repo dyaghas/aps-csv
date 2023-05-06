@@ -28,7 +28,7 @@ public class Aluno implements CsvInterface {
         }
     }
     //Realiza as operações de leitura em cada linha do csv
-    private void processaLinhaCsv(String linha) {
+    public void processaLinhaCsv(String linha) {
         String[] parte = linha.split(";");
         //condicional que evita parse do nome da coluna 'id' para int
         if(!parte[0].equals("id")) {
