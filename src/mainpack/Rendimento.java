@@ -13,6 +13,7 @@ public abstract class Rendimento {
     private double exame;
     private double media;
     private boolean aprovado;
+    private final String numberFormatErrorMessage = "Número inválido";
 
     // Construtor do rendimento
     public Rendimento() {
@@ -37,7 +38,6 @@ public abstract class Rendimento {
     //cadastra as notas de um aluno em um curso
     public void cadastrarRendimento(Scanner scan, Aluno aluno, String nivelCurso) {
         int idAluno = lerIdAluno(scan);
-        scan.nextLine();
         if(getAluno(aluno, idAluno)) {
             System.out.print("Digite a nota da NP1: ");
             np1 = lerNotaAluno(scan);
@@ -46,7 +46,7 @@ public abstract class Rendimento {
             System.out.print("Digite a nota da reposição: ");
             reposicao = lerNotaAluno(scan);
             media = calcularMedia(np1, np2, reposicao);
-            validarMedia(media, lerExame());
+            validarMedia(media, lerExame(scan));
             String nomeCurso = lerNomeCurso(scan);
             int anoCurso = lerAnoCurso(scan);
             String nomeArquivo = formatarCurso(nomeCurso, nivelCurso, anoCurso);
@@ -71,14 +71,24 @@ public abstract class Rendimento {
     }
 
     private int lerIdAluno(Scanner scan) {
-        System.out.print("Digite o id do aluno: ");
-        return scan.nextInt();
+        while(true) {
+            try {
+                System.out.print("Digite o id do aluno: ");
+                return Integer.parseInt(scan.nextLine());
+            } catch(NumberFormatException e) {
+                System.out.println(numberFormatErrorMessage);
+            }
+        }
     }
 
     private double lerNotaAluno(Scanner scan) {
-        double nota = scan.nextDouble();
-        scan.nextLine();
-        return nota;
+        while(true) {
+            try {
+                return Double.parseDouble(scan.nextLine());
+            } catch(NumberFormatException e) {
+                System.out.println(numberFormatErrorMessage);
+            }
+        }
     }
 
     private String lerNomeCurso(Scanner scan) {
@@ -87,18 +97,22 @@ public abstract class Rendimento {
     }
 
     private int lerAnoCurso(Scanner scan) {
-        System.out.print("Digite o ano do curso: ");
-        return scan.nextInt();
+        while(true) {
+            try {
+                System.out.println("Digite o ano do curso: ");
+                return Integer.parseInt(scan.nextLine());
+            } catch(NumberFormatException e) {
+                System.out.println(numberFormatErrorMessage);
+            }
+        }
     }
 
     //formata uma 'string' para acessar o arquivo csv do respectivo curso
     private String formatarCurso(String nomeCurso, String cursoNivel, int anoCurso) {
         if(cursoNivel.equals("1")) {
-            String graduacao = "GRADUACAO";
-            cursoNivel = graduacao;
+            cursoNivel = "GRADUACAO";
         } else {
-            String posGraduacao = "POS-GRADUACAO";
-            cursoNivel = posGraduacao;
+            cursoNivel = "POS-GRADUACAO";
         }
         String nomeArquivo = "./"+nomeCurso+"_"+cursoNivel+"_"+anoCurso;
         nomeArquivo = formatarRegexArquivo(nomeArquivo);
@@ -107,7 +121,7 @@ public abstract class Rendimento {
     }
 
     private String formatarRegexArquivo(String nomeArquivo) {
-        nomeArquivo.toUpperCase();
+        nomeArquivo = nomeArquivo.toUpperCase();
         //substituição de caracteres especiais
         nomeArquivo = nomeArquivo.replaceAll(" ", "-");
         nomeArquivo = nomeArquivo.replaceAll("Ç", "C");
@@ -137,18 +151,22 @@ public abstract class Rendimento {
         }
     }
 
-    public double lerExame() {
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Digite a nota do exame: ");
-        exame = scan.nextDouble();
-        return exame;
+    public double lerExame(Scanner scan) {
+        while(true) {
+            try {
+                System.out.print("Digite a nota do exame: ");
+                return Double.parseDouble(scan.nextLine());
+            } catch(NumberFormatException e) {
+                System.out.println("Número inválido");
+            }
+        }
     }
 
     public void setAprovado(boolean aprovado) {
         this.aprovado = aprovado;
     }
 
-    //Exibe alunos de um curso específico, mostrando seus id's, médias
+    //Exibe alunos de um curso específico, mostrando os seus 'ids', médias
     //(considerando graduação ou pós-graduação) e se estão aprovados ou não
     public void exibirRendimento(Scanner scan, String nivelCurso) {
         String nomeCurso = lerNomeCurso(scan);
@@ -191,7 +209,7 @@ public abstract class Rendimento {
         lerMediaCsv(nomeArquivo);
     }
 
-    //lê todas as notas de todos alunos em um curso específico
+    //lê todas as notas de todos os alunos num curso específico
     public void lerMediaCsv(String nomeArquivo) {
         try {
             if (new File(nomeArquivo).isFile()) {
@@ -221,7 +239,7 @@ public abstract class Rendimento {
         }
     }
 
-    //Exibe as notas, média e status de aprovação de um aluno em todos os cursos que ele está
+    //Exibe as notas, média e estado de aprovação de um aluno em todos os cursos que ele está
     public void exibirRendimentoAluno(Scanner scan) {
         int idAluno = lerIdAluno(scan);
         lerRendimentoAlunoCsv(idAluno);
@@ -239,7 +257,7 @@ public abstract class Rendimento {
                     while(scanArquivo.hasNextLine()) {
                         String linha = scanArquivo.nextLine();
                         String[] dados = linha.split(";");
-                        int idAlunoArquivo = 0;
+                        int idAlunoArquivo;
                         try {
                             idAlunoArquivo = Integer.parseInt(dados[0]);
                         } catch (NumberFormatException e) {
@@ -254,7 +272,8 @@ public abstract class Rendimento {
                             exame = Double.parseDouble(dados[4]);
                             media = calcularMedia(np1, np2, reposicao);
                             validarMedia(media, exame);
-                            System.out.println("id: " + idAluno + " | media: " + media + " | aprovado: " + aprovado + " | curso: " + nomeArquivo);
+                            System.out.println("id: "+idAluno+" | media: "+media+" | aprovado: "
+                                    +aprovado+" | curso: "+nomeArquivo);
                         }
                     }
                     scanArquivo.close();
@@ -279,7 +298,7 @@ public abstract class Rendimento {
                     while(scanArquivo.hasNextLine()) {
                         String linha = scanArquivo.nextLine();
                         String[] dados = linha.split(";");
-                        int idAlunoArquivo = 0;
+                        int idAlunoArquivo;
                         try {
                             idAlunoArquivo = Integer.parseInt(dados[0]);
                         } catch (NumberFormatException e) {
