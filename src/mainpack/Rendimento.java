@@ -39,14 +39,11 @@ public abstract class Rendimento {
     public void cadastrarRendimento(Scanner scan, Aluno aluno, String nivelCurso) {
         int idAluno = lerIdAluno(scan);
         if(getAluno(aluno, idAluno)) {
-            System.out.print("Digite a nota da NP1: ");
-            np1 = lerNotaAluno(scan);
-            System.out.print("Digite a nota da NP2: ");
-            np2 = lerNotaAluno(scan);
-            System.out.print("Digite a nota da reposição: ");
-            reposicao = lerNotaAluno(scan);
+            np1 = lerNotaAluno(scan, "Digite a nota da NP1: ");
+            np2 = lerNotaAluno(scan, "Digite a nota da NP2: ");
+            reposicao = lerNotaAluno(scan, "Digite a nota da reposição: ");
             media = calcularMedia(np1, np2, reposicao);
-            validarMedia(media, lerExame(scan));
+            validarMedia(media, lerNotaAluno(scan, "Digite a nota do exame: "));
             String nomeCurso = lerNomeCurso(scan);
             int anoCurso = lerAnoCurso(scan);
             String nomeArquivo = formatarCurso(nomeCurso, nivelCurso, anoCurso);
@@ -60,7 +57,7 @@ public abstract class Rendimento {
             if (new File(nomeArquivo).isFile()) {
                 FileWriter fr = new FileWriter(nomeArquivo, true);
                 BufferedWriter br = new BufferedWriter(fr);
-                br.write(idAluno + ";" + np1 + ";" + np2 + ";" + reposicao + ";" + exame + "\n");
+                br.write(idAluno+";"+np1+";"+np2+";"+reposicao+";"+exame+"\n");
                 br.close();
             } else {
                 System.out.println("Curso não encontrado");
@@ -81,10 +78,16 @@ public abstract class Rendimento {
         }
     }
 
-    private double lerNotaAluno(Scanner scan) {
+    private double lerNotaAluno(Scanner scan, String tituloNota) {
         while(true) {
             try {
-                return Double.parseDouble(scan.nextLine());
+                System.out.print(tituloNota);
+                double nota = Double.parseDouble(scan.nextLine());
+                if(nota >= 0 && nota <= 10) {
+                    return nota;
+                } else {
+                    System.out.println("A nota deve ter um valor entre 0 e 10");
+                }
             } catch(NumberFormatException e) {
                 System.out.println(numberFormatErrorMessage);
             }
@@ -148,17 +151,6 @@ public abstract class Rendimento {
         } else {
             System.out.println("\nAluno não encontrado\n");
             return false;
-        }
-    }
-
-    public double lerExame(Scanner scan) {
-        while(true) {
-            try {
-                System.out.print("Digite a nota do exame: ");
-                return Double.parseDouble(scan.nextLine());
-            } catch(NumberFormatException e) {
-                System.out.println("Número inválido");
-            }
         }
     }
 

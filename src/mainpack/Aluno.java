@@ -34,7 +34,6 @@ public class Aluno implements CsvInterface {
         if(!parte[0].equals("id")) {
             int id = Integer.parseInt(parte[0]);
             String nome = parte[1];
-            updateMaxId(id);
             alunos.put(id, nome);
         }
     }
