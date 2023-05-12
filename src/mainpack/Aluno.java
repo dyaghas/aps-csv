@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Aluno implements CsvInterface {
-    private int maxId;
     private int novoId;
     private final File alunoCsv = new File("./alunos.csv");
 
@@ -74,13 +73,6 @@ public class Aluno implements CsvInterface {
             }
         } else {
             System.out.println("\nNome deve conter entre 3 e 50 caracteres\n");
-        }
-    }
-
-    //método responsável por escolher qual será o id do próximo aluno cadastrado
-    public void updateMaxId(int id) {
-        if(id > maxId) {
-            maxId = id;
         }
     }
 
